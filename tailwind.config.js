@@ -6,6 +6,11 @@ module.exports = {
         xs: "3px",
       },
       minWidth: {
+        "10r": "10rem",
+        "1/4": "25rem",
+      },
+      maxWidth: {
+        "10r": "10rem",
         "1/4": "25rem",
       },
     },

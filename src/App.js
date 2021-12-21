@@ -1,7 +1,7 @@
 import "./App.css";
 import OrgChart from "react-orgchart";
 import "react-orgchart/index.css";
-import { createContext, useReducer, useState } from "react";
+import { createContext, useReducer } from "react";
 import ModalNewKeluarga from "./components/ModalNewKeluarga";
 import NodeDummy from "./components/NodeDummy";
 import NodeManager from "./components/NodeManager";

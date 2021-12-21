@@ -4,22 +4,32 @@ import { AuthContext } from "./../App";
 import ModalAnakBaru from "./ModalAnakBaru";
 import NodeSudahKawin from "./NodeSudahKawin";
 import NodeAnak from "./NodeAnak";
+import ModalEditKeluarga from "./ModalEditKeluarga";
 
 export default function NodeManager(props) {
-  const { dispatch, state } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
   const { node } = props;
   const [menuAnak, setMenuAnak] = useState(false);
+  const [menuEditKeluarga, setMenuEditKeluarga] = useState(false);
+
   console.log(props);
 
   return (
     <>
-      {node.type === "menikah" && (
-        <NodeSudahKawin node={node} setMenuAnak={(x) => setMenuAnak(x)} />
+      {(node.type === "menikah" ||
+        node.type === "pisah" ||
+        node.type === "cerai") && (
+        <NodeSudahKawin
+          node={node}
+          setNewChild={(x) => setMenuAnak(x)}
+          setEdit={(x) => setMenuEditKeluarga(x)}
+        />
       )}
       {node.type === "anak" && (
         <NodeAnak node={node} setMenuAnak={(x) => setMenuAnak(x)} />
       )}
 
+      {/* Modal */}
       {menuAnak && (
         <ModalAnakBaru
           node={node}
@@ -43,6 +53,9 @@ export default function NodeManager(props) {
             setMenuAnak(false);
           }}
         />
+      )}
+      {menuEditKeluarga && (
+        <ModalEditKeluarga node={node} close={() => setMenuEditKeluarga(false)} />
       )}
     </>
   );

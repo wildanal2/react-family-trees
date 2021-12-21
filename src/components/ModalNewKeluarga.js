@@ -1,16 +1,18 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "./../App";
+import { v4 as uuidv4 } from "uuid";
 
 export default function ModalNewKeluarga(props) {
-  const { dispatch, state } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
 
   const [step, setStep] = useState(1);
-  const [jenisKel, setJenisKel] = useState("-");
-  const [statusKel, setStatusKel] = useState("menikah");
   const [nama1, setNama1] = useState("");
   const [jk1, setJk1] = useState("male");
   const [nama2, setNama2] = useState("");
   const [jk2, setJk2] = useState("female");
+  const [jenisKel, setJenisKel] = useState("-");
+  const [statusKel, setStatusKel] = useState("menikah");
+  const [kondisi, setKondisi] = useState("bersama");
 
   const dataBentukKeluarga = [
     {
@@ -56,13 +58,15 @@ export default function ModalNewKeluarga(props) {
       type: "SETDATA",
       payload: {
         data: {
+          nid: "010000_" + uuidv4(),
           nama1: nama1,
           jk1: jk1,
           nama2: nama2,
           jk2: jk2,
-          type: statusKel,
-          bentuk_kel: jenisKel,
           children: [],
+          bentuk_kel: jenisKel,
+          type: statusKel,
+          kondisi: kondisi,
         },
       },
     });
@@ -186,13 +190,16 @@ export default function ModalNewKeluarga(props) {
                 value={statusKel}
                 onChange={(e) => {
                   setStatusKel(e.target.value);
+                  setKondisi(
+                    e.target.selectedOptions[0].getAttribute("data-val")
+                  );
                 }}
                 className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
               >
-                <option value="anak" data-val="anak">
+                <option value="anak" data-val="sendiri">
                   Anak / Belum menikah
                 </option>
-                <option value="menikah" data-val="menikah">
+                <option value="menikah" data-val="bersama">
                   Menikah
                 </option>
                 <option value="pisah" data-val="pisah">

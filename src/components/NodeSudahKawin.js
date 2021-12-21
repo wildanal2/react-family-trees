@@ -1,20 +1,43 @@
-import DotLine from "../assets/dotted_line.svg";
+import Genders from "./Genders";
+import PopMenuMenikah from "./PopMenuMenikah";
+import KondisisKeluarga from "./KondisisKeluarga";
 
 export default function NodeSudahKawin(props) {
   const { node } = props;
 
-  //cursor-pointer transition-all hover:scale-105
-
   return (
-    <div
-      onClick={() => {
-        props.setMenuAnak(true);
-      }}
-      className={`inline-flex flex-row border p-2 bg-yellow-200`}
-    >
-      <div>{node.nama1}</div>
-      <img src={DotLine} alt="" className="w-20" />
-      <div>{node.nama2}</div>
+    <div className={`inline-flex flex-row border-dashed p-2 group`}>
+      <div className="grid grid-rows-3 grid-flow-col pl-1 shadow border border-gray-100 rounded group-hover:shadow-lg">
+        <div className="row-span-3 flex justify-center">
+          <Genders gen={node.jk1} />
+        </div>
+        <div className="row-span-2 col-span-2 text-xs flex items-center">
+          <span className="text-center w-full">{node.nama1}</span>
+        </div>
+        <div className="col-span-2 min-w-10r max-w-10r text-xs flex">
+          <div className="text-center w-full">&nbsp;</div>
+        </div>
+      </div>
+      <div className="relative">
+        <KondisisKeluarga status={node.kondisi} />
+        <div className="absolute inset-x-0 -bottom-3 flex flex-col items-center z-10 transition-all group-hover:scale-150">
+          <PopMenuMenikah
+            NewKeturunan={() => props.setNewChild(true)}
+            EditData={() => props.setEdit(true)}
+          />
+        </div>
+      </div>
+      <div className="grid grid-rows-3 grid-flow-col pl-1 shadow border border-gray-100 rounded group-hover:shadow-lg ">
+        <div className="row-span-3 flex justify-center">
+          <Genders gen={node.jk2} />
+        </div>
+        <div className="row-span-2 col-span-2 text-xs flex items-center">
+          <span className="text-center w-full">{node.nama2}</span>
+        </div>
+        <div className="col-span-2 min-w-10r max-w-10r text-xs flex">
+          <div className="text-center w-full">&nbsp;</div>
+        </div>
+      </div>
     </div>
   );
 }

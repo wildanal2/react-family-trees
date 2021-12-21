@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="5.801 12.598 401.89 401.59"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlnsBx="https://boxy-svg.com">
+  <path d="m5.801 12.598h401.89v401.59h-401.89z" fill="rgba(216, 216, 216, 0)" stroke="#000" strokeWidth="10"/>
+  <path d="m207.2 383.22-154.79-309.58h309.58l-154.79 309.58z" fill="rgba(216, 216, 216, 0)" stroke="#000" bxShape="triangle -361.99 -383.221 309.579 309.579 0.5 0 1@559dcbff" strokeWidth="10"/>
+</svg>
