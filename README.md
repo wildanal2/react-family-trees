@@ -1,70 +1,72 @@
-# Getting Started with Create React App
+# React-Family-Tree
+## _Genogram Family_
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![N|Genogram](https://raw.githubusercontent.com/wildanal2/react-family-trees/main/ss/Screenshot%20at%20Dec%2022%2018-20-44.png)](https://raw.githubusercontent.com/wildanal2/react-family-trees/main/ss/Screenshot%20at%20Dec%2022%2018-20-44.png)
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Aplikasi Genogram yang dibuat dengan menggunakan React. 
+ 
+- See Your Family Structure
+- ✨Magic ✨
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+- Dinamic Family Input
+- Zoom & Pan Support
+- Auto Resize Diagram
+- Export documents as Image and PDF
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Markdown is a lightweight markup language based on the formatting conventions
+that people naturally use in email. 
 
-### `npm run build`
+## Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+React Family Tree requires [Node.js](https://nodejs.org/) v10+ to run.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Install the dependencies and devDependencies and start the server.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```sh 
+npm install
+npm start
+```
+ 
+ 
 
-### `npm run eject`
+## Plugins
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+React Family Tree is currently extended with the following plugins.
+Instructions on how to use them in your own application are linked below.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+| Plugin | README |
+| ------ | ------ |
+| React-Orgchart | [github.com/nater1067/react-orgchart][Pluuid] | 
+| UUID | [github.com/uuidjs/uuid][Plorgc] |
+ 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## License
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+MIT
 
-## Learn More
+**Free Software, Hell Yeah!**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   [dill]: <https://github.com/joemccann/dillinger>
+   [git-repo-url]: <https://github.com/joemccann/dillinger.git>
+   [john gruber]: <http://daringfireball.net>
+   [df1]: <http://daringfireball.net/projects/markdown/>
+   [markdown-it]: <https://github.com/markdown-it/markdown-it>
+   [Ace Editor]: <http://ace.ajax.org>
+   [node.js]: <http://nodejs.org>
+   [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
+   [jQuery]: <http://jquery.com>
+   [@tjholowaychuk]: <http://twitter.com/tjholowaychuk>
+   [express]: <http://expressjs.com>
+   [AngularJS]: <http://angularjs.org>
+   [Gulp]: <http://gulpjs.com>
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+   [Plorgc]: <https://www.npmjs.com/package/react-orgchart>
+   [Pluuid]: <https://www.npmjs.com/package/uuid> 
