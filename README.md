@@ -22,6 +22,10 @@ Aplikasi Genogram yang dibuat dengan menggunakan React.
 Markdown is a lightweight markup language based on the formatting conventions
 that people naturally use in email. 
 
+## Demo
+[DEMO](https://react-family-trees.vercel.app/)
+
+
 ## Installation
 
 React Family Tree requires [Node.js](https://nodejs.org/) v10+ to run.
@@ -49,8 +53,6 @@ Instructions on how to use them in your own application are linked below.
 ## License
 
 MIT
-
-**Free Software, Hell Yeah!**
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
