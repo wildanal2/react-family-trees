@@ -5,7 +5,8 @@ import CloseIcon from "@mui/icons-material/Close";
 
 export default function ModalEditKeluarga(props) {
   const { node } = props;
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch, state } = useContext(AuthContext);
+  const dataBentukKeluarga = state.dataBentukKeluarga;
 
   const [nama1, setNama1] = useState(node.nama1);
   const [jk1, setJk1] = useState(node.jk1);
@@ -14,61 +15,87 @@ export default function ModalEditKeluarga(props) {
   const [statusKel, setStatusKel] = useState(node.type);
   const [kondisi, setKondisi] = useState(node.kondisi);
 
-  const dataBentukKeluarga = [
-    {
-      name: "Keluarga inti (nuclear family)",
-      value: "nuclear_family",
-    },
-    {
-      name: "Keluarga besar (extended family)",
-      value: "extended_family",
-    },
-    {
-      name: "Keluarga campuran (blended family)",
-      value: "blended_family",
-    },
-    {
-      name: "Keluarga hukum umum (common law family)",
-      value: "common_law_family",
-    },
-    {
-      name: "Keluarga orang tua single (single parent family)",
-      value: "single_parent_family",
-    },
-    {
-      name: "Keluarga hidup bersama (commune family)",
-      value: "commune_family",
-    },
-    {
-      name: "Keluarga serial (serial family)",
-      value: "serial_family",
-    },
-    {
-      name: "Keluaga gabungan (composie family)",
-      value: "composie_family",
-    },
-    {
-      name: "Keluarga tinggal bersama (cohabilition)",
-      value: "cohabilition",
-    },
-  ];
-
   const setUpdateKel = () => {
-    props.close();
-    dispatch({
-      type: "SETDATA",
-      payload: {
-        data: {
-          ...node,
-          nama1: nama1,
-          jk1: jk1,
-          nama2: nama2,
-          jk2: jk2,
-          type: statusKel,
-          kondisi: kondisi,
+    // Edit
+    if (node.gen === 1) {
+      //Keluarga GEN_1
+      dispatch({
+        type: "SETDATA",
+        payload: {
+          data: {
+            ...node,
+            nama1: nama1,
+            jk1: jk1,
+            nama2: nama2,
+            jk2: jk2,
+            type: statusKel,
+            kondisi: kondisi,
+          },
         },
-      },
-    });
+      });
+    }
+    if (node.gen === 2) {
+      //update GEN 2
+      const x = {
+        ...state.data,
+        children: state.data.children.map((el, i) =>
+          el.nid === node.nid
+            ? {
+                ...el,
+                nama1: nama1,
+                jk1: jk1,
+                nama2: nama2,
+                jk2: jk2,
+                type: statusKel,
+                kondisi: kondisi,
+              }
+            : el
+        ),
+      };
+
+      dispatch({
+        type: "SETDATA",
+        payload: {
+          data: x,
+        },
+      });
+    }
+    if (node.gen === 3) {
+      //update GEN 2
+
+      const x = {
+        ...state.data,
+        children: state.data.children.map((el) =>
+          el.prefix.split(/(..)/g).filter((s) => s)[1] ===
+          node.prefix.split(/(..)/g).filter((s) => s)[1]
+            ? {
+                ...el,
+                children: el.children.map((ell) =>
+                  ell.nid === node.nid
+                    ? {
+                        ...ell,
+                        nama1: nama1,
+                        jk1: jk1,
+                        nama2: nama2,
+                        jk2: jk2,
+                        type: statusKel,
+                        kondisi: kondisi,
+                      }
+                    : ell
+                ),
+              }
+            : el
+        ),
+      };
+
+      dispatch({
+        type: "SETDATA",
+        payload: {
+          data: x,
+        },
+      });
+    }
+    props.close();
   };
 
   return (
@@ -77,9 +104,13 @@ export default function ModalEditKeluarga(props) {
         <>
           <div className="relative mb-5">
             <h1 className="text-center">
-              {dataBentukKeluarga.find((el) => el.value === node.bentuk_kel) &&
-                dataBentukKeluarga.find((el) => el.value === node.bentuk_kel)
-                  .name}
+              {node.gen === 1
+                ? dataBentukKeluarga.find(
+                    (el) => el.value === node.bentuk_kel
+                  ) &&
+                  dataBentukKeluarga.find((el) => el.value === node.bentuk_kel)
+                    .name
+                : " Edit Keluarga"}
             </h1>
             <div className="absolute -top-2 right-0">
               <IconButton
@@ -97,13 +128,13 @@ export default function ModalEditKeluarga(props) {
                 htmlFor="name"
                 className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
               >
-                {statusKel === "anak" ? "Nama :" : "Nama Ayah :"}
+                {statusKel === "anak" ? "Nama :" : "Nama Suami :"}
               </label>
               <div className="relative">
                 <input
                   name="nama_ayah"
                   type="text"
-                  placeholder={statusKel === "anak" ? "Nama" : "Nama Ayah"}
+                  placeholder={statusKel === "anak" ? "Nama" : "Nama Suami"}
                   value={nama1}
                   onChange={(e) => setNama1(e.target.value)}
                   className="text-sm sm:text-base relative w-full border rounded placeholder-gray-400 focus:border-indigo-400 focus:outline-none py-2 pr-2 pl-2"
@@ -134,13 +165,13 @@ export default function ModalEditKeluarga(props) {
                   htmlFor="name"
                   className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
                 >
-                  Nama Ibu :
+                  Nama Istri :
                 </label>
                 <div className="relative">
                   <input
                     type="text"
                     name="nama_ibu"
-                    placeholder="Nama Ibu"
+                    placeholder="Nama Istri"
                     value={nama2}
                     onChange={(e) => {
                       setNama2(e.target.value);

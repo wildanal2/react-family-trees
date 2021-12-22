@@ -107,7 +107,7 @@ export default function PopMenuMenikah(props) {
         <MenuItem
           onClick={() => {
             handleClose();
-            console.log("click");
+            props.Deleted();
           }}
           sx={{ fontSize: 14 }}
         >

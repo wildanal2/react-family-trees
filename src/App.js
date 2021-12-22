@@ -10,6 +10,44 @@ import NodeManager from "./components/NodeManager";
 export const AuthContext = createContext();
 const initialState = {
   data: null,
+  dataBentukKeluarga: [
+    {
+      name: "Keluarga inti (nuclear family)",
+      value: "nuclear_family",
+    },
+    {
+      name: "Keluarga besar (extended family)",
+      value: "extended_family",
+    },
+    {
+      name: "Keluarga campuran (blended family)",
+      value: "blended_family",
+    },
+    {
+      name: "Keluarga hukum umum (common law family)",
+      value: "common_law_family",
+    },
+    {
+      name: "Keluarga orang tua single (single parent family)",
+      value: "single_parent_family",
+    },
+    {
+      name: "Keluarga hidup bersama (commune family)",
+      value: "commune_family",
+    },
+    {
+      name: "Keluarga serial (serial family)",
+      value: "serial_family",
+    },
+    {
+      name: "Keluaga gabungan (composie family)",
+      value: "composie_family",
+    },
+    {
+      name: "Keluarga tinggal bersama (cohabilition)",
+      value: "cohabilition",
+    },
+  ],
 };
 
 const reducer = (state, action) => {
@@ -31,7 +69,9 @@ const reducer = (state, action) => {
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  
+
+  console.log("BaseDat ", state.data);
+
   //Placeholder DATA
   const initechOrg = {
     name: "Dimas + Laras",

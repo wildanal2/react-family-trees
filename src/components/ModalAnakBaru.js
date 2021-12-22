@@ -1,24 +1,117 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "./../App";
+import { v4 as uuidv4 } from "uuid";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function ModalAnakBaru(props) {
+  const { dispatch, state } = useContext(AuthContext);
+  const { node } = props;
+
   const [statusKel, setStatusKel] = useState("anak");
   const [nama1, setNama1] = useState("");
   const [jk1, setJk1] = useState("male");
   const [nama2, setNama2] = useState("");
   const [jk2, setJk2] = useState("female");
+  const [kondisi, setKondisi] = useState("-");
+
+  const formatNumber = (n) => ("0" + n).slice(-2);
 
   const setNewKel = () => {
-    console.log("added");
-    props.setNewChild({
-      nama1: nama1,
-      jk1: jk1,
-      nama2: nama2,
-      jk2: jk2,
-      type: statusKel,
-      children: [],
-    });
+    let z = {};
+    const pPrefix = node.prefix.split(/(..)/g).filter((s) => s);
+
+    if (node.gen === 1) {
+      //GEN 1 =>add new child
+      const lastpref =
+        node.children.length === 0
+          ? "01"
+          : formatNumber(
+              Number(
+                node.children[node.children.length - 1].prefix
+                  .split(/(..)/g)
+                  .filter((s) => s)[1]
+              ) + 1
+            );
+
+      z = {
+        ...node,
+        children: [
+          ...node.children,
+          {
+            nid: uuidv4(),
+            prefix: pPrefix[0] + lastpref + pPrefix[2],
+            gen: node.gen + 1,
+            nama1: nama1,
+            jk1: jk1,
+            nama2: nama2,
+            jk2: jk2,
+            type: statusKel,
+            kondisi: kondisi,
+            children: [],
+          },
+        ],
+      };
+
+      dispatch({
+        type: "SETDATA",
+        payload: {
+          data: z,
+        },
+      });
+    }
+
+    if (node.gen === 2) {
+      //GEN 2 =>add new child
+      z = {
+        ...state.data,
+        children: state.data.children.map((el, i) =>
+          el.prefix === node.prefix
+            ? {
+                ...el,
+                children: [
+                  ...el.children,
+                  {
+                    nid: uuidv4(),
+                    prefix:
+                      el.prefix.split(/(..)/g).filter((s) => s)[0] +
+                      el.prefix.split(/(..)/g).filter((s) => s)[1] +
+                      (el.children.length === 0
+                        ? "01"
+                        : formatNumber(
+                            Number(
+                              el.children[el.children.length - 1].prefix
+                                .split(/(..)/g)
+                                .filter((s) => s)[2]
+                            ) + 1
+                          )),
+                    gen: el.gen + 1,
+                    nama1: nama1,
+                    jk1: jk1,
+                    nama2: nama2,
+                    jk2: jk2,
+                    type: statusKel,
+                    kondisi: kondisi,
+                    children: [],
+                  },
+                ],
+              }
+            : el
+        ),
+      };
+
+      dispatch({
+        type: "SETDATA",
+        payload: {
+          data: z,
+        },
+      });
+    }
+
+    if (node.gen === 3) {
+      alert("Maaf tidak dapat menambah keturunan lagi");
+    }
+    props.close();
   };
 
   return (
@@ -62,13 +155,13 @@ export default function ModalAnakBaru(props) {
                 htmlFor="name"
                 className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
               >
-                {statusKel === "anak" ? "Nama :" : "Nama Ayah :"}
+                {statusKel === "anak" ? "Nama :" : "Nama Suami :"}
               </label>
               <div className="relative">
                 <input
                   name="nama_ayah"
                   type="text"
-                  placeholder={statusKel === "anak" ? "Nama" : "Nama Ayah"}
+                  placeholder={statusKel === "anak" ? "Nama" : "Nama Suami"}
                   value={nama1}
                   onChange={(e) => setNama1(e.target.value)}
                   className="text-sm sm:text-base relative w-full border rounded placeholder-gray-400 focus:border-indigo-400 focus:outline-none py-2 pr-2 pl-2"
@@ -99,13 +192,13 @@ export default function ModalAnakBaru(props) {
                   htmlFor="name"
                   className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
                 >
-                  Nama Ibu :
+                  Nama Istri :
                 </label>
                 <div className="relative">
                   <input
                     type="text"
                     name="nama_ibu"
-                    placeholder="Nama Ibu"
+                    placeholder="Nama Istri"
                     value={nama2}
                     onChange={(e) => {
                       setNama2(e.target.value);
@@ -141,6 +234,9 @@ export default function ModalAnakBaru(props) {
               value={statusKel}
               onChange={(e) => {
                 setStatusKel(e.target.value);
+                setKondisi(
+                  e.target.selectedOptions[0].getAttribute("data-val")
+                );
               }}
               className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
             >

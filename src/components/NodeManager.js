@@ -7,12 +7,60 @@ import NodeAnak from "./NodeAnak";
 import ModalEditKeluarga from "./ModalEditKeluarga";
 
 export default function NodeManager(props) {
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch, state } = useContext(AuthContext);
   const { node } = props;
-  const [menuAnak, setMenuAnak] = useState(false);
+  const [AnakBaru, setAnakBaru] = useState(false);
   const [menuEditKeluarga, setMenuEditKeluarga] = useState(false);
 
-  console.log(props);
+  console.log("node", props.node);
+  //hapus Node
+  const deletedNode = () => {
+    if (node.gen === 1) {
+      dispatch({
+        type: "SETDATA",
+        payload: {
+          data: null,
+        },
+      });
+    }
+
+    if (node.gen === 2) {
+      //GEN 2 Deleted
+      const z = {
+        ...state.data,
+        children: state.data.children.filter((ell) => ell.nid !== node.nid),
+      };
+
+      dispatch({
+        type: "SETDATA",
+        payload: {
+          data: z,
+        },
+      });
+    }
+    if (node.gen === 3) {
+      //GEN 3 Deleted
+      const z = {
+        ...state.data,
+        children: state.data.children.map((el, i) =>
+          el.prefix.split(/(..)/g).filter((s) => s)[1] ===
+          node.prefix.split(/(..)/g).filter((s) => s)[1]
+            ? {
+                ...el,
+                children: el.children.filter((ell) => ell.nid !== node.nid),
+              }
+            : el
+        ),
+      };
+
+      dispatch({
+        type: "SETDATA",
+        payload: {
+          data: z,
+        },
+      });
+    }
+  };
 
   return (
     <>
@@ -21,41 +69,35 @@ export default function NodeManager(props) {
         node.type === "cerai") && (
         <NodeSudahKawin
           node={node}
-          setNewChild={(x) => setMenuAnak(x)}
+          setNewChild={(x) => setAnakBaru(x)}
           setEdit={(x) => setMenuEditKeluarga(x)}
+          deletedNode={() => deletedNode()}
         />
       )}
       {node.type === "anak" && (
-        <NodeAnak node={node} setMenuAnak={(x) => setMenuAnak(x)} />
+        <NodeAnak
+          node={node}
+          setNewChild={(x) => setAnakBaru(x)}
+          setEdit={(x) => setMenuEditKeluarga(x)}
+          deletedNode={() => deletedNode()}
+        />
       )}
 
-      {/* Modal */}
-      {menuAnak && (
+      {/* ==== Modal Menu ==== */}
+      {AnakBaru && (
         <ModalAnakBaru
           node={node}
-          turunan={node.nama1 + " & " + node.nama2}
-          close={() => setMenuAnak(false)}
-          setNewChild={(x) => {
-            console.log("nod", node);
-            console.log("xxx", x);
-            const z = {
-              ...node,
-              children: [...node.children, x],
-            };
-
-            console.log(z);
-            dispatch({
-              type: "SETDATA",
-              payload: {
-                data: z,
-              },
-            });
-            setMenuAnak(false);
-          }}
+          turunan={
+            node.type === "anak" ? node.nama1 : node.nama1 + " & " + node.nama2
+          }
+          close={() => setAnakBaru(false)}
         />
       )}
       {menuEditKeluarga && (
-        <ModalEditKeluarga node={node} close={() => setMenuEditKeluarga(false)} />
+        <ModalEditKeluarga
+          node={node}
+          close={() => setMenuEditKeluarga(false)}
+        />
       )}
     </>
   );

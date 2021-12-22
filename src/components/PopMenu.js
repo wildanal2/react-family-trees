@@ -7,7 +7,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import AddIcon from "@mui/icons-material/Add"; 
+import AddIcon from "@mui/icons-material/Add";
 
 export default function PopMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -71,7 +71,7 @@ export default function PopMenu(props) {
         <MenuItem
           onClick={() => {
             handleClose();
-            console.log("click");
+            props.NewKeturunan();
           }}
           sx={{ fontSize: 14 }}
         >
@@ -83,7 +83,7 @@ export default function PopMenu(props) {
         <MenuItem
           onClick={() => {
             handleClose();
-            console.log("click");
+            props.EditData();
           }}
           sx={{ fontSize: 14 }}
         >
@@ -95,7 +95,7 @@ export default function PopMenu(props) {
         <MenuItem
           onClick={() => {
             handleClose();
-            console.log("click");
+            props.Deleted();
           }}
           sx={{ fontSize: 14 }}
         >

@@ -3,7 +3,8 @@ import { AuthContext } from "./../App";
 import { v4 as uuidv4 } from "uuid";
 
 export default function ModalNewKeluarga(props) {
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch, state } = useContext(AuthContext);
+  const dataBentukKeluarga = state.dataBentukKeluarga;
 
   const [step, setStep] = useState(1);
   const [nama1, setNama1] = useState("");
@@ -14,51 +15,14 @@ export default function ModalNewKeluarga(props) {
   const [statusKel, setStatusKel] = useState("menikah");
   const [kondisi, setKondisi] = useState("bersama");
 
-  const dataBentukKeluarga = [
-    {
-      name: "Keluarga inti (nuclear family)",
-      value: "nuclear_family",
-    },
-    {
-      name: "Keluarga besar (extended family)",
-      value: "extended_family",
-    },
-    {
-      name: "Keluarga campuran (blended family)",
-      value: "blended_family",
-    },
-    {
-      name: "Keluarga hukum umum (common law family)",
-      value: "common_law_family",
-    },
-    {
-      name: "Keluarga orang tua single (single parent family)",
-      value: "single_parent_family",
-    },
-    {
-      name: "Keluarga hidup bersama (commune family)",
-      value: "commune_family",
-    },
-    {
-      name: "Keluarga serial (serial family)",
-      value: "serial_family",
-    },
-    {
-      name: "Keluaga gabungan (composie family)",
-      value: "composie_family",
-    },
-    {
-      name: "Keluarga tinggal bersama (cohabilition)",
-      value: "cohabilition",
-    },
-  ];
-
   const setNewKel = () => {
     dispatch({
       type: "SETDATA",
       payload: {
         data: {
-          nid: "010000_" + uuidv4(),
+          nid: uuidv4(),
+          prefix:"010000",
+          gen: 1,
           nama1: nama1,
           jk1: jk1,
           nama2: nama2,
@@ -111,13 +75,13 @@ export default function ModalNewKeluarga(props) {
                   htmlFor="name"
                   className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
                 >
-                  {jenisKel === "anak" ? "Nama :" : "Nama Ayah :"}
+                  {jenisKel === "anak" ? "Nama :" : "Nama Suami :"}
                 </label>
                 <div className="relative">
                   <input
                     name="nama_ayah"
                     type="text"
-                    placeholder={jenisKel === "anak" ? "Nama" : "Nama Ayah"}
+                    placeholder={jenisKel === "anak" ? "Nama" : "Nama Suami"}
                     value={nama1}
                     onChange={(e) => setNama1(e.target.value)}
                     className="text-sm sm:text-base relative w-full border rounded placeholder-gray-400 focus:border-indigo-400 focus:outline-none py-2 pr-2 pl-2"
@@ -148,13 +112,13 @@ export default function ModalNewKeluarga(props) {
                     htmlFor="name"
                     className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
                   >
-                    Nama Ibu :
+                    Nama Istri :
                   </label>
                   <div className="relative">
                     <input
                       type="text"
                       name="nama_ibu"
-                      placeholder="Nama Ibu"
+                      placeholder="Nama Istri"
                       value={nama2}
                       onChange={(e) => {
                         setNama2(e.target.value);
